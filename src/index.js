@@ -9,14 +9,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function loadBreeds() {
         try {
+            const breedSelect = document.querySelector('.breed-select');
+
             document.querySelector('.loader').classList.remove('hidden');
-            document.querySelector('.breed-select').classList.add('hidden');
+            breedSelect.classList.add('hidden');
             document.querySelector('.error').classList.add('hidden');
 
             const response = await axios.get('https://api.thecatapi.com/v1/breeds');
             const breeds = response.data;
 
-            const breedSelect = document.querySelector('.breed-select');
             breedSelect.innerHTML = breeds
                 .map(breed => `<option value="${breed.id}">${breed.name}</option>`)
                 .join('');
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             document.querySelector('.loader').classList.remove('hidden');
             document.querySelector('.cat-info').classList.add('hidden');
+            document.querySelector('.breed-select').classList.add('hidden');
             document.querySelector('.error').classList.add('hidden');
 
             const response = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`);
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
         } finally {
             document.querySelector('.loader').classList.add('hidden');
+            document.querySelector('.breed-select').classList.remove('hidden');
         }
     }
 
